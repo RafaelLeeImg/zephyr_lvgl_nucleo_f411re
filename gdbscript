@@ -25,7 +25,7 @@ b z_arm_usage_fault
 b fault.c:1004
 
 #        breakpoint 5
-b arch_swap
+b zephyr/arch/arm/core/aarch32/swap.c:41
 
 #        breakpoint 6
 
