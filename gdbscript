@@ -1,0 +1,54 @@
+# -*- GDB-Script -*-
+# "file" should place before "target"
+# gdb-multiarch -x gdbscript
+
+set debug arm
+
+build/zephyr/zephyr.elf
+target remote localhost:3333
+
+#        breakpoint 1
+# west/modules/lib/gui/lvgl/src/lv_misc/lv_task.c
+# if(lv_task_exec(LV_GC_ROOT(_lv_task_act)))
+b lv_task.c:142
+
+#        breakpoint 2
+# zephyr/drivers/i2c/i2c_ll_stm32.c
+# k_sem_give(&data->bus_mutex);
+# # where the program stops
+b i2c_ll_stm32.c:167
+
+#        breakpoint 3
+b z_arm_usage_fault
+
+#        breakpoint 4
+b fault.c:1004
+
+#        breakpoint 5
+b arch_swap
+
+#        breakpoint 6
+
+# command
+# stop 2 times at breakpoint 1 and continue until the last function before 
+disable
+enable 1
+c
+
+enable
+c
+c
+c
+
+# DWT_CTRL bit 17, CPIEVTENA, Enables CPI count event.
+# set *0xE0001000=(*0xE0001000) & (0x20000)
+set *0xE0001000 = 0x20001
+# reset DWT_CYCCNT value, Cycle count register
+set *0xE0001004 = (long int)0x0
+# DWT_CPICNT, Instruction cycle count event register
+set *0xE0001008 = (long int)0x0
+
+# press c again to enter the fault and check the clock count
+# it's 90 on my computer
+# c
+# p/d *0xE0001004
