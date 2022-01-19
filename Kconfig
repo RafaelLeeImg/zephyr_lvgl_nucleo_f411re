@@ -1,0 +1,8 @@
+# LambdaChip configuration options
+
+# Copyright (c) 2020-2021 LambdaChip
+
+# SPDX-License-Identifier: LGPL-3.0
+
+
+source "Kconfig.zephyr"

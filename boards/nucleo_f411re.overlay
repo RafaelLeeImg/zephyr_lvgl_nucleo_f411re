@@ -1,0 +1,105 @@
+/*
+ * Copyright (c) 2020-2021 LambdaChip
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* /dts-v1/;
+#include <st/f4/stm32f411Xe.dtsi>
+#include <st/f4/stm32f411r(c-e)tx-pinctrl.dtsi> */
+/* #include "arduino_r3_connector.dtsi" */
+
+/* Alonzo v0.0.5 */
+
+/ {
+	// model = "LambdaChip Alonzo";
+	// compatible = "st,stm32f411";
+
+	chosen {
+	};
+
+	// &i2c1 {
+	// 	// clock-frequency = <400000>;
+	// 	test_i2c_ssd1306fb: ssd1306fb@26 {
+	// 		compatible = "solomon,ssd1306fb";
+	// 		label = "SSD1306FB";
+	// 		reg = <0x26>;
+	// 		height = <0>;
+	// 		width = <0>;
+	// 		segment-offset = <0>;
+	// 		page-offset = <0>;
+	// 		display-offset = <0>;
+	// 		multiplex-ratio = <0>;
+	// 		/* segment-remap; */
+	// 		/* com-invdir; */
+	// 		/* com-sequential; */
+	// 		prechargep = <0>;
+	// 		reset-gpios = <&test_gpio 0 0>;
+	// 	};
+
+		// ssd1306_128x64@0 {
+		// 	compatible = "solomon,ssd1306_128x64", "gooddisplay,gdeh0213b1";
+		// 	label = "SSD16XX";
+		// 	spi-max-frequency = <4000000>;
+		// 	reg = <4>;
+		// 	width = <256>;
+		// 	height = <128>;
+		// 	pp-width-bits = <8>;
+		// 	pp-height-bits = <8>;
+		// 	reset-gpios = <&gpiob 6 GPIO_ACTIVE_LOW>;
+		// 	dc-gpios = <&gpiob 7 GPIO_ACTIVE_LOW>;
+		// 	// busy-gpios = <&gpioa 14 GPIO_ACTIVE_HIGH>;
+		// 	gdv = [10 0a];
+		// 	sdv = [19];
+		// 	vcom = <0xa8>;
+		// 	border-waveform = <0x71>;
+		// 	lut-initial = [
+		// 		22 55 AA 55 AA 55 AA 11
+		// 		00 00 00 00 00 00 00 00
+		// 		1E 1E 1E 1E 1E 1E 1E 1E
+		// 		01 00 00 00 00
+		// 	];
+		// 	lut-default = [
+		// 		18 00 00 00 00 00 00 00
+		// 		00 00 00 00 00 00 00 00
+		// 		0F 01 00 00 00 00 00 00
+		// 		00 00 00 00 00
+		// 	];
+		// };
+};
+
+
+// &i2c0 {
+// 	status = "okay";
+// 	sda-pin = <0>;
+// 	scl-pin = <1>;
+
+// 	/* Sparkfun Environment Combo uses second I2C address */
+// 	// ccs811: ccs811@5b {
+// 	// 	compatible = "ams,ccs811";
+// 	// 	reg = <0x5b>;
+// 	// 	label = "CCS811";
+// 	// 	irq-gpios = <&gpio0 2 GPIO_ACTIVE_LOW>;
+// 	// 	wake-gpios = <&gpio0 5 GPIO_ACTIVE_LOW>;
+// 	// 	reset-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
+// 	// };
+// };
+
+&i2c3 {
+	status = "okay";
+
+	ssd1306@3c {
+		compatible = "solomon,ssd1306fb";
+		reg = <0x3c>;
+		label = "SSD1306";
+		width = <128>;
+		height = <64>;
+		segment-offset = <0>;
+		page-offset = <0>;
+		display-offset = <0>;
+		multiplex-ratio = <63>;
+		segment-remap;
+		com-invdir;
+		prechargep = <0x22>;
+	};
+};
